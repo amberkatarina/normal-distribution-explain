@@ -1,0 +1,38 @@
+.button-primary {
+	display: flex;
+	justify-content: center;
+	padding: 13px 24px;
+	font-size: 18px;
+	line-height: 22px;
+	font-weight: 400;
+	color: #fff;
+	background-color: #1a1b22;
+	border: 0;
+	outline: none;
+	border-radius: 8px;
+	cursor: default;
+	transition: cursor .15s ease-out,background-color .15s ease-out;
+	width: 180px;
+}
+.button-primary:hover {
+	cursor: pointer;
+	background-color: #005cff;
+}
+.button-reset {
+	padding: 12px;
+	display: flex;
+	justify-content: center;
+	font-size: 18px;
+	line-height: 22px;
+	font-weight: 400;
+	background-color: #1a1b22;
+	border: none;
+	border-radius: 50%;
+	outline: none;
+	cursor: default;
+	transition: cursor .15s ease-out,background-color .15s ease-out;
+}
+.button-reset:hover {
+	cursor: pointer;
+	background-color: #005cff;
+}

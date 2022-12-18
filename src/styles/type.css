@@ -1,6 +1,13 @@
 @font-face {
-    font-family: 'Open Sans';
-    src: url('../../public/fonts/OpenSans-Regular.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-         url('../../public/fonts/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+	font-family: 'Open Sans';
+	src: url('../../public/fonts/OpenSans-Regular.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+		url('../../public/fonts/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}  
+@font-face {
+	font-family: 'YS Text';
+	src: url('../../public/fonts/YS\ Text-Regular.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+		url('../../public/fonts/YS\ Text-Bold.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+		url('../../public/fonts/YS\ Text-Regular.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+		url('../../public/fonts/YS\ Text-Bold.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }  
 

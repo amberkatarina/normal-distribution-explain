@@ -21,3 +21,34 @@
   width: 100%;
   height: 100%;
 }
+.visualization-block {
+  position: relative;
+}
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: green;
+  border-radius: 50%;
+  transition: translate 0.5s ease-out;
+}
+.dot.top {
+  z-index: 10;
+}
+.dot-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  opacity: 0;
+  z-index: 10;
+}
+.dot-tooltip.shown {
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}

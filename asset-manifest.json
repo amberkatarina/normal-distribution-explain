@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/normal-distribution-explain/static/css/main.77d2e737.css",
+    "main.js": "/normal-distribution-explain/static/js/main.e7f129c0.js",
+    "static/media/YS Text-Bold.ttf": "/normal-distribution-explain/static/media/YS Text-Bold.8250a613c94671a9b776.ttf",
+    "static/media/YS Text-Regular.ttf": "/normal-distribution-explain/static/media/YS Text-Regular.d30d692a0a77b7bc1037.ttf",
+    "static/media/YS Text-Bold.woff": "/normal-distribution-explain/static/media/YS Text-Bold.fa9ed1e1812dac2595ef.woff",
+    "static/media/YS Text-Regular.woff": "/normal-distribution-explain/static/media/YS Text-Regular.d12a91b5a1cec2ae3493.woff",
+    "index.html": "/normal-distribution-explain/index.html",
+    "main.77d2e737.css.map": "/normal-distribution-explain/static/css/main.77d2e737.css.map",
+    "main.e7f129c0.js.map": "/normal-distribution-explain/static/js/main.e7f129c0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.77d2e737.css",
+    "static/js/main.e7f129c0.js"
+  ]
+}

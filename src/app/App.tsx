@@ -13,7 +13,12 @@ const SIGMA = 10;
 
 const PAGE_NUMBER = 2;
 
-const getNormalValueByMullerMethod = () => {
+interface Coordinate {
+	x: number,
+  y: number,
+}
+
+const getNormalValueByMullerMethod = (): number => {
   const [r1, r2] = [Math.random(), Math.random()];
   return Math.sqrt(-2 * Math.log(r1))*Math.cos(2 * Math.PI * r2);
 }
@@ -23,33 +28,31 @@ const getNormalValueByMullerMethod = () => {
 //   return (V - 3) / Math.sqrt(1 / 2);
 // }
 
-const transformNormalValue = (val) => {
+const transformNormalValue= (val: number): number  => {
   return val*SIGMA + MEAN;
 }
 
-const createAppletreesArr = () => {
+const createAppletreesArr = (): Array<number> => {
   let index = 0;
-  let treesArr = [];
+  let treesArr = new Array();
   let value = 0;
   
   while(index < TREES_NUMBER) {
     value = transformNormalValue(getNormalValueByMullerMethod());
-    console.log(value);
     if (value < MIN_HARVEST_VALUE) {
-      console.log('less')
       value = MIN_HARVEST_VALUE;
     } else if (value > MAX_HARVEST_VALUE) {
-      console.log('more')
       value = MAX_HARVEST_VALUE;
     }
-    treesArr[index] = value;
+    treesArr.push(value);
     index = index+1;
   }
   return treesArr;
 }
-const getAppletreesArr = () => {
+
+const getAppletreesArr = (): Array<number> => {
   const savedTrees = localStorage.getItem("treesArr");
-  let initialTreesArr = [];
+  let initialTreesArr = new Array();
   if (savedTrees) {
     initialTreesArr = JSON.parse(savedTrees);
   } else {
@@ -66,7 +69,7 @@ const App = () => {
   const handleNext = () => setPage(currentPage => currentPage + 1);
   const handleReset = () => setPage(1);
 
-  const getCoordinates = (index) => {
+  const getCoordinates = (index: number): Coordinate => {
     const colNumber = 24;
     const sectionNumber = 6;
     const col = Math.trunc(index / colNumber);
@@ -81,15 +84,14 @@ const App = () => {
 
     return {x: xCoord, y: yCoord};
   }
-  const normalDistributionFunction = (X) => {
+  const normalDistributionFunction = (X: number): number => {
     return 1 / (SIGMA*Math.sqrt(2*Math.PI)) * Math.exp(-1 * Math.pow(X - MEAN, 2) / (2* Math.pow(SIGMA, 2)));
   }
-  const getNormalDistributionCoordinates = (value) => {
+  const getNormalDistributionCoordinates = (value: number): Coordinate => {
     const xCoord = (value - MIN_HARVEST_VALUE)*10.5;
     const yCoord = 300 - normalDistributionFunction(value)*5000;
     return {x: xCoord, y: yCoord};
   }
-
 
   return (
     <div className="explanation-wrap">
@@ -128,7 +130,9 @@ const App = () => {
       <div className='pagination-wrap'>
         <span>{page} из {PAGE_NUMBER}</span>
         {PAGE_NUMBER !== page
-          ? <Button onClick={handleNext}>Далее</Button>
+          ? <Button onClick={handleNext}>
+              <span>Далее</span>
+            </Button>
           : <Button kind='reset' onClick={handleReset}><ResetIcon /></Button>
         }
       </div>

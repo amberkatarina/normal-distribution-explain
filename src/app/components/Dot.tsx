@@ -1,23 +1,30 @@
 import React, {useState} from 'react';
-import {motion} from 'framer-motion';
+import PropTypes from 'prop-types';
+
+import {motion, Variants} from 'framer-motion';
 
 const MAX_HARVEST_VALUE = 180;
 
 const tooltipVariants = {
   hidden: {
-    opacity: 0, 
-    display: 'none'
+    opacity: [0, 0], 
+    display: ['block','none'],
+    transition: {duration: .25}
   },
   show: {
-    opacity: 1,
-    display: 'block',
-    transition: {
-      duration: .4
-    }
+    opacity: [0, 1],
+    display: ['block','block'],
+    transition: {duration: .25}
   }
 }
 
-const Dot = ({value, variants, animate}) => {
+interface DotProps {
+	value: number,
+	variants: Variants,
+	animate: string,
+}
+
+const Dot = ({value, variants, animate}: DotProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const treeLightness = (MAX_HARVEST_VALUE - value)/3 + 30;
 
@@ -35,7 +42,7 @@ const Dot = ({value, variants, animate}) => {
       onMouseLeave={handleMouseLeave}
       variants={variants}
       animate={animate}
-      initial={{...variants.fistPage}}
+      initial='fistPage'
     >
       <motion.div 
         className={`dot-tooltip`}
@@ -47,6 +54,12 @@ const Dot = ({value, variants, animate}) => {
       </motion.div>
     </motion.div>
   )
+};
+
+Dot.propTypes = {
+	value: PropTypes.number.isRequired,
+  variants: PropTypes.any.isRequired,
+	animate: PropTypes.string.isRequired,
 };
 
 export default Dot;

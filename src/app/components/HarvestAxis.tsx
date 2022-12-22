@@ -1,4 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import {motion} from 'framer-motion';
+
 
 const pathVariants = {
 	hidden: {pathLength: 0},
@@ -9,14 +13,18 @@ const axisVariants = {
 	show: {
 		opacity: 1,
 		transition: {
-      delayChildren: 1,
-    }
+			delayChildren: 1,
+		}
 	},
 }
 
-const HarvestAxix = ({page}) => (
+interface HarvestAxixProps {
+	page: number,
+}
+
+const HarvestAxix = ({page}: HarvestAxixProps) => (
 	<motion.div 
-		class="axis"
+		className="axis"
 		initial={'hidden'}
 		animate={page === 1 ? 'firstPage': 'show'}
 		variants={axisVariants}
@@ -33,10 +41,14 @@ const HarvestAxix = ({page}) => (
 				variants={pathVariants}
 				/>
 		</svg>
-		<span class="axis-caption">
+		<span className="axis-caption">
 			Урожайность
 		</span>
 	</motion.div>
 );
+
+HarvestAxix.propTypes = {
+	page: PropTypes.number.isRequired,
+}
 
 export default HarvestAxix;

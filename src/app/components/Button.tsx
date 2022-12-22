@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({kind, children, onClick}) => (
+
+interface ButtonProps {
+	kind?: 'primary' | 'reset',
+	children: React.ReactNode,
+	onClick: (e: React.MouseEvent) => void,
+}
+
+const Button = ({kind, children, onClick}: ButtonProps) => (
 	<button className={`button-${kind}`} onClick={onClick}>
 		{children}
 	</button>
@@ -9,7 +16,7 @@ const Button = ({kind, children, onClick}) => (
 
 Button.propTypes = {
 	kind: PropTypes.oneOf(['primary', 'reset']),
-  	children: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired,
 	onClick: PropTypes.func.isRequired,
 };
 

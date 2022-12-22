@@ -32,7 +32,7 @@ const transformNormalValue= (val: number): number  => {
   return val*SIGMA + MEAN;
 }
 
-const createAppletreesArr = (): Array<number> => {
+const createAppletreesArr = (): number[] => {
   let index = 0;
   let treesArr = new Array();
   let value = 0;
@@ -50,7 +50,7 @@ const createAppletreesArr = (): Array<number> => {
   return treesArr;
 }
 
-const getAppletreesArr = (): Array<number> => {
+const getAppletreesArr = (): number[] => {
   const savedTrees = localStorage.getItem("treesArr");
   let initialTreesArr = new Array();
   if (savedTrees) {

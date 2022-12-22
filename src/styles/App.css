@@ -1,39 +1,70 @@
-.App {
-  text-align: center;
-}
-
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.explanation-wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 32px;
+  width: 764px;
+  min-width: 764px;
+  height: 573px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(209, 210, 214, 0.5);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.pagination-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.illustration-wrap {
+  width: 100%;
+  height: 100%;
+}
+.visualization-block {
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: green;
+  border-radius: 50%;
+}
+.dot.top {
+  z-index: 10;
+  box-shadow: 0 0 0 1.5px #1a1b22;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dot-tooltip {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #1a1b22;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 0 8px 8px 8px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  opacity: 0;
+  display: none;
+  z-index: 10;
+}
+.dot-tooltip.shown {
+  opacity: 1;
+  display: block;
+}
+
+.axis {
+  position: absolute;
+  top: 305px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+.axis-caption {
+  align-self: flex-end;
+  font-size: 0.8em;
 }

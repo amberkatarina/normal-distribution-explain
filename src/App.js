@@ -1,118 +1,159 @@
-import React, { useState, memo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import {motion} from 'framer-motion';
 
-// import './styles/App.css';
 import Button from './components/Button';
 import ResetIcon from './components/ResetIcon';
-import Wrapper from './components/Wrapper';
+import HarvestAxix from './components/HarvestAxis';
+
+const TREES_NUMBER = 576;
+const MIN_HARVEST_VALUE = 120;
+const MAX_HARVEST_VALUE = 180;
+const MEAN = 150;
+const SIGMA = 10;
+
+const PAGE_NUMBER = 2;
+
+const getNormalValueByMullerMethod = () => {
+  const [r1, r2] = [Math.random(), Math.random()];
+  return Math.sqrt(-2 * Math.log(r1))*Math.cos(2 * Math.PI * r2);
+}
+
+const getNormalValueByCentraLimitTheorem = () => {
+  const V = Math.random() + Math.random() + Math.random() + Math.random() + Math.random() + Math.random();
+  return (V - 3) / Math.sqrt(1 / 2);
+}
+
+const transformNormalValue = (val) => {
+  return val*SIGMA + MEAN;
+}
+
+const createAppletreesArr = () => {
+  let index = 0;
+  let treesArr = [];
+  let value = 0;
+  
+  while(index < TREES_NUMBER) {
+    value = transformNormalValue(getNormalValueByMullerMethod());
+    console.log(value);
+    if (value < MIN_HARVEST_VALUE) {
+      console.log('less')
+      value = MIN_HARVEST_VALUE;
+    } else if (value > MAX_HARVEST_VALUE) {
+      console.log('more')
+      value = MAX_HARVEST_VALUE;
+    }
+    treesArr[index] = value;
+    index = index+1;
+  }
+  return treesArr;
+}
+const getAppletreesArr = () => {
+  const savedTrees = localStorage.getItem("treesArr");
+  let initialTreesArr = [];
+  if (savedTrees) {
+    initialTreesArr = JSON.parse(savedTrees);
+  } else {
+    initialTreesArr = createAppletreesArr();
+    localStorage.setItem("treesArr", JSON.stringify(initialTreesArr));
+  }
+  return initialTreesArr;
+}
+const treesArr = getAppletreesArr();
 
 const App = () => {
-  const pageCount = 2;
-  const minValue = 120;
-  const maxValue = 180;
-  const mean = 150;
-  const standardDeviation = 10;
-  const treesNumber = 576;
   const [page, setPage] = useState(1);
-  
+
   const handleNext = () => setPage(currentPage => currentPage + 1);
   const handleReset = () => setPage(1);
-  
-  const getNormalValueByMullerMethod = () => {
-    const [r1, r2] = [Math.random(), Math.random()];
-    return Math.sqrt(-2 * Math.log(r1))*Math.cos(2 * Math.PI * r2);
-  }
-  
-  const getNormalValueByCentraLimitTheorem = () => {
-    const V = Math.random() + Math.random() + Math.random() + Math.random() + Math.random() + Math.random();
-    return (V - 3) / Math.sqrt(1 / 2);
-  }
-  
-  const transformValue = (val) => {
-    return val*standardDeviation + mean;
-  }
-  
-  const createAppletrees = (number) => {
-    let index = 0;
-    let treesArr = [];
-    let value = 0;
-    
-    while(index < number) {
-      value = transformValue(getNormalValueByMullerMethod());
-      if (value < minValue) {
-        value = minValue;
-      } else if (value > maxValue) {
-        value = maxValue;
-      }
-      treesArr[index] = value;
-      index = index+1;
-    }
-    console.log(Math.max(...treesArr));
-    console.log(Math.min(...treesArr));
-    return treesArr;
-  }
-  
+
   const getCoordinates = (index) => {
     const colNumber = 24;
     const sectionNumber = 6;
     const col = Math.trunc(index / colNumber);
     const row = index % colNumber;
-    const horCoef = 10;
-    const vertCoef = 10;
+    const horCoef = 11;
+    const vertCoef = 11;
     const sectionHorCoef = 20;
     const sectionVerCoef = 10;
-    const xCoord = col * horCoef + Math.trunc(col / sectionNumber)*sectionHorCoef; 
-    const yCoord = 300 - (row * vertCoef + Math.trunc(row / sectionNumber)*sectionVerCoef);
+
+    const xCoord = col * horCoef + Math.trunc(col / sectionNumber)*sectionHorCoef + 175; 
+    const yCoord = 310 - (row * vertCoef + Math.trunc(row / sectionNumber)*sectionVerCoef);
 
     return {x: xCoord, y: yCoord};
   }
   const normalDistributionFunction = (X) => {
-    return 1 / (standardDeviation*Math.sqrt(2*Math.PI)) * Math.exp(-1 * Math.pow(X - mean, 2) / (2* Math.pow(standardDeviation, 2)));
+    return 1 / (SIGMA*Math.sqrt(2*Math.PI)) * Math.exp(-1 * Math.pow(X - MEAN, 2) / (2* Math.pow(SIGMA, 2)));
   }
   const getNormalDistributionCoordinates = (value) => {
-    const xCoord = (value - minValue)*10;
+    const xCoord = (value - MIN_HARVEST_VALUE)*10.5;
     const yCoord = 300 - normalDistributionFunction(value)*5000;
     return {x: xCoord, y: yCoord};
   }
-  
-  const appleTreesArr = createAppletrees(treesNumber);
+
+
   return (
-    <Wrapper>
-      <p>В яблоневом саду 576 яблонь, которые высажены квадратами 6×6 деревьев с межами между ними. У каждого дерева известна урожайность в кг с дерева. Урожайность распределена нормально от 120 до 180 кг с медианой в 150 кг и сигмой 10 кг.</p>
+    <div className="explanation-wrap">
+      <p>В яблоневом саду 576 яблонь, которые высажены квадратами 6×6 деревьев с межами между ними. У каждого дерева известна урожайность в кг с дерева. Урожайность распределена нормально от 120 до 180 кг с медианой в 150 кг и сигмой 10 кг.</p>
       <div className='illustration-wrap'>
         <div className='visualization-block'>
-            {appleTreesArr.map((treeVal, index) => {
-              console.log(index);
+          <HarvestAxix page={page} />
+          <div>
+            {treesArr.map((treeVal, index) => {
               const pageFirstCoord = getCoordinates(index);
               const pageSecondCoord = getNormalDistributionCoordinates(treeVal);
-              const coord = page == 1 ? pageFirstCoord : pageSecondCoord;
+            
+              const variants = {
+                fistPage: {
+                  transform: `translate(${pageFirstCoord.x}px, ${pageFirstCoord.y}px)`, 
+                  transition: {duration: 0.5}
+                },
+                secondPage: {
+                  transform: `translate(${pageSecondCoord.x}px, ${pageSecondCoord.y}px)`, 
+                  transition: {duration: 0.5}
+                },
+              }
               
               return (
                 <Dot 
                   key={index}
                   value={treeVal} 
-                  style={{
-                    transform: `translate(${coord.x}px, ${coord.y}px)`,
-                    backgroundColor: `hsl(110deg 55% ${(maxValue - treeVal)/3 + 30}%)`
-                  }}
+                  animate={page == 1 ? "fistPage" : "secondPage"}
+                  variants={variants}
                 />
               )
             })}
+          </div>
         </div>
       </div>
       <div className='pagination-wrap'>
-        <span>{page} из {pageCount}</span>
-        {pageCount !== page
+        <span>{page} из {PAGE_NUMBER}</span>
+        {PAGE_NUMBER !== page
           ? <Button onClick={handleNext}>Далее</Button>
           : <Button kind='reset' onClick={handleReset}><ResetIcon /></Button>
         }
       </div>
-    </Wrapper>
+    </div>
   );
 }
 
+const tooltipVariants = {
+  hidden: {
+    opacity: 0, 
+    display: 'none'
+  },
+  show: {
+    opacity: 1,
+    display: 'block',
+    transition: {
+      duration: .4
+    }
+  }
+}
 
-const Dot = ({value, style}) => {
+const Dot = ({value, variants, animate}) => {
   const [isHovered, setIsHovered] = useState(false);
+  const treeLightness = (MAX_HARVEST_VALUE - value)/3 + 30;
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   }
@@ -120,18 +161,25 @@ const Dot = ({value, style}) => {
     setIsHovered(false);
   }
   return(
-    <div className={`dot ${isHovered ? 'top' : ''}`} style={style} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <div className={`dot-tooltip ${isHovered ? 'shown' : ''}`}>{`${value.toFixed(2)} кг`}</div>
-    </div>
+    <motion.div 
+      className={`dot ${isHovered ? 'top' : ''}`} 
+      style={{backgroundColor: `hsl(110deg 55% ${treeLightness}%)`}}
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave}
+      variants={variants}
+      animate={animate}
+      initial={{...variants.fistPage}}
+    >
+      <motion.div 
+        className={`dot-tooltip`}
+        initial='hidden'
+        animate={isHovered ? 'show': 'hidden'}
+        variants={tooltipVariants}
+      >
+        {`${value.toFixed(2)} кг`}
+      </motion.div>
+    </motion.div>
   )
 };
-
-// function App() {
-//   return(
-  // <Wrapper>
-//     <p>Это подготовительная страничка для объяснялки про нормальное распределение</p>
-//   );
-//  </Wrapper>
-// }
 
 export default App;

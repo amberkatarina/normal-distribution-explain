@@ -9,7 +9,7 @@ const Button = ({kind, children, onClick}) => (
 
 Button.propTypes = {
 	kind: PropTypes.oneOf(['primary', 'reset']),
-  children: PropTypes.element.isRequired,
+  	children: PropTypes.element.isRequired,
 	onClick: PropTypes.func.isRequired,
 };
 

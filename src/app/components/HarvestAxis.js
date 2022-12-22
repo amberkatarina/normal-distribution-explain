@@ -18,7 +18,7 @@ const HarvestAxix = ({page}) => (
 	<motion.div 
 		class="axis"
 		initial={'hidden'}
-		animate={page == 1 ? 'firstPage': 'show'}
+		animate={page === 1 ? 'firstPage': 'show'}
 		variants={axisVariants}
 	>
 		<svg width="652" height="12" viewBox="0 0 652 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@ const HarvestAxix = ({page}) => (
 				strokeLinecap="round" 
 				strokeLinejoin="round"
 				initial={'hidden'}
-				animate={page == 1 ? 'hidden': 'show'}
+				animate={page === 1 ? 'hidden': 'show'}
 				variants={pathVariants}
 				/>
 		</svg>

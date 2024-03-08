@@ -16,12 +16,12 @@ const Button = ({kind, children, onClick}: ButtonProps) => (
 
 Button.propTypes = {
 	kind: PropTypes.oneOf(['primary', 'reset']),
-  children: PropTypes.element.isRequired,
+	children: PropTypes.element.isRequired,
 	onClick: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
-  kind: 'primary',
+	kind: 'primary',
 };
 
 export default Button;
